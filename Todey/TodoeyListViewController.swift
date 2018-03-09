@@ -10,7 +10,7 @@ import UIKit
 
 class TodoeyListViewController: UITableViewController {
 
-    let itemArray = ["Find Mike", "Prepara la cena", "Compra la coca zero"]
+   var itemArray = ["Find Mike", "Prepara la cena", "Compra la coca zero"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +33,6 @@ class TodoeyListViewController: UITableViewController {
     //MARK - TableView Delegate Method
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        print(itemArray[indexPath.row])
-    
-        
         if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark{
             tableView.cellForRow(at: indexPath)?.accessoryType = .none
         } else {
@@ -42,6 +40,34 @@ class TodoeyListViewController: UITableViewController {
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
+    //MARK - Add new items
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add new todo item", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            //cosa succede quando clicco su add item
+            
+            self.itemArray.append(textField.text!)
+            
+            self.tableView.reloadData()
+        }
+        
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+            
+            
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
+        
     }
 }
 
