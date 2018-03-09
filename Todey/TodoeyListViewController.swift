@@ -12,8 +12,14 @@ class TodoeyListViewController: UITableViewController {
 
    var itemArray = ["Find Mike", "Prepara la cena", "Compra la coca zero"]
     
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let items = defaults.array(forKey: "TodoListArray") as? [String]{
+            itemArray = items
+        }
         
     }
     
@@ -53,6 +59,8 @@ class TodoeyListViewController: UITableViewController {
             //cosa succede quando clicco su add item
             
             self.itemArray.append(textField.text!)
+            
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
             
             self.tableView.reloadData()
         }
